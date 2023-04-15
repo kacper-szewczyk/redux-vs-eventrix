@@ -30,7 +30,7 @@ const ProductItem = ({ product }: Props) => {
           <Typography variant="body1">Price: {product.price}</Typography>
           {(!productQuantity || productQuantity === 0) && (
             <Button
-              sx={{ marginTop: 4 }}
+              sx={{ marginTop: 3 }}
               onClick={() => handleAddToCart(product)}
               variant="contained"
             >
