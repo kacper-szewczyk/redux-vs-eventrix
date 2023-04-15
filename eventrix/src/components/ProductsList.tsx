@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid, Stack, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import { getProducts } from "../store/cart/selectors";
 import ProductItem from "./ProductItem";
+import { useEventrixState } from "eventrix";
+import { Product } from "../store/cart/types";
 
 const ProductsList = () => {
-  const products = useSelector(getProducts);
+  const [products] = useEventrixState<Product[]>("products");
 
   return (
     <Stack>

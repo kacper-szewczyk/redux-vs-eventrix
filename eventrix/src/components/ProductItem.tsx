@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../store/cart/actions";
-import { Product } from "../store/cart/types";
-import { getNumberOfItemsInTheCart } from "../store/cart/selectors";
+import { CartItem, Events, Product } from "../store/cart/types";
+import { useEmit, useEventrixState } from "eventrix";
 
 type Props = {
   product: Product;
 };
 
 const ProductItem = ({ product }: Props) => {
-  const dispatch = useDispatch();
-  const productQuantity = useSelector(getNumberOfItemsInTheCart(product));
+  const emit = useEmit();
+  const [cartItems] = useEventrixState<CartItem[]>("cartItems");
+
+  const productQuantity = useMemo(
+    () => cartItems.find((item) => item.product.id === product.id)?.quantity,
+    [cartItems]
+  );
 
   const handleAddToCart = (product: Product) => {
-    dispatch(addToCart(product));
+    emit(Events.ADD_TO_CART, product);
   };
 
   const handleRemoveFromCart = (product: Product) => {
-    dispatch(removeFromCart(product));
+    emit(Events.REMOVE_FROM_CART, product);
   };
 
   return (

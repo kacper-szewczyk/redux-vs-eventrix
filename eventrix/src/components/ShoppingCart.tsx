@@ -1,12 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { getCartItems } from "../store/cart/selectors";
 import { CartItem } from "../store/cart/types";
 import ProductItem from "./ProductItem";
 import { Grid, Stack, Typography } from "@mui/material";
+import { useEventrixState } from "eventrix";
 
 const ShoppingCart = () => {
-  const cartItems = useSelector(getCartItems);
+  const [cartItems] = useEventrixState<CartItem[]>("cartItems");
 
   return (
     <Stack>
