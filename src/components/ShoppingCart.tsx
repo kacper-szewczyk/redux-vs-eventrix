@@ -1,49 +1,32 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../store/cart/actions";
+import { useSelector } from "react-redux";
 import { getCartItems } from "../store/cart/selectors";
-import { CartItem, Product } from "../store/cart/types";
+import { CartItem } from "../store/cart/types";
+import ProductItem from "./ProductItem";
+import { Grid, Stack, Typography } from "@mui/material";
 
 const ShoppingCart = () => {
-  const dispatch = useDispatch();
   const cartItems = useSelector(getCartItems);
 
-  const handleAddToCart = (product: Product) => {
-    dispatch(addToCart(product));
-  };
-
-  const handleRemoveFromCart = (product: Product) => {
-    dispatch(removeFromCart(product));
-  };
-
   return (
-    <div>
-      <h1>Shopping Cart</h1>
+    <Stack>
+      <Typography variant="h3">Shopping Cart</Typography>
 
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <Typography variant="body1">Your cart is empty</Typography>
       ) : (
         <>
-          <p>You have {cartItems.length} items in your cart.</p>
-          <ul>
+          <Typography variant="h5">
+            You have {cartItems.length} items in your cart.
+          </Typography>
+          <Grid container spacing={4}>
             {cartItems.map((item: CartItem) => (
-              <li key={item.product.id}>
-                <img src={item.product.image} alt={item.product.name} />
-                <p>{item.product.name}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>Price: {item.product.price}</p>
-                <button onClick={() => handleAddToCart(item.product)}>
-                  Add to Cart
-                </button>
-                <button onClick={() => handleRemoveFromCart(item.product)}>
-                  Remove from Cart
-                </button>
-              </li>
+              <ProductItem product={item.product} />
             ))}
-          </ul>
+          </Grid>
         </>
       )}
-    </div>
+    </Stack>
   );
 };
 
