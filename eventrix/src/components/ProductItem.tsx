@@ -13,7 +13,7 @@ const ProductItem = ({ product }: Props) => {
 
   const productQuantity = useMemo(
     () => cartItems.find((item) => item.product.id === product.id)?.quantity,
-    [cartItems]
+    [cartItems, product.id]
   );
 
   const handleAddToCart = (product: Product) => {

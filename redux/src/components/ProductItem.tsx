@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../store/cart/actions";
@@ -13,13 +13,13 @@ const ProductItem = ({ product }: Props) => {
   const dispatch = useDispatch();
   const productQuantity = useSelector(getNumberOfItemsInTheCart(product));
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = useCallback((product: Product) => {
     dispatch(addToCart(product));
-  };
+  }, [dispatch]);
 
-  const handleRemoveFromCart = (product: Product) => {
+  const handleRemoveFromCart =  useCallback((product: Product) => {
     dispatch(removeFromCart(product));
-  };
+  }, [dispatch]);
 
   return (
     <Grid item xs={6} md={3}>
